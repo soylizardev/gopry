@@ -12,6 +12,7 @@ type InfoOs struct {
 
 type InfoPc struct {
 	Pc      string
+	Arch    string
 	CPU     string
 	Graphic string
 	Disk    string

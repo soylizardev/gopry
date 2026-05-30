@@ -36,11 +36,11 @@ func (i *InfoPc) GetPc() {
 
 func (i *InfoPc) GetCPU() {
 	cmd, err := os.ReadFile("/proc/cpuinfo")
-	split := strings.Split(string(cmd), "\n")
 	if err != nil {
 		i.CPU = "Unknown"
 		return
 	}
+	split := strings.Split(string(cmd), "\n")
 	var cpuModel string
 	var cpuCores string
 	cpuThreads := 0
@@ -57,6 +57,14 @@ func (i *InfoPc) GetCPU() {
 		}
 	}
 	i.CPU = fmt.Sprintf("%s (%s Cores / %d Threads)", cpuModel, cpuCores, cpuThreads)
+}
+
+func (i *InfoPc) GetArch() {
+	output, err := os.ReadFile("/proc/sys/kernel/arch")
+	if err != nil {
+		i.Arch = "Unknown"
+	}
+	i.Arch = strings.TrimSpace(string(output))
 }
 
 func (i *InfoPc) GetGraphics() {

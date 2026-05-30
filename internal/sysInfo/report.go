@@ -15,6 +15,7 @@ func (sr *SystemReport) Render() {
 	//Hardware
 	sr.PC.GetPc()
 	sr.PC.GetCPU()
+	sr.PC.GetArch()
 	sr.PC.GetGraphics()
 	sr.PC.GetDisk()
 	sr.PC.GetRam()
@@ -37,6 +38,7 @@ func (sr *SystemReport) Render() {
 	// Bloque de Hardware (PC)
 	fmt.Printf("   \033[1;33mHost:\033[0m     %s\n", sr.PC.Pc)
 	fmt.Printf("   \033[1;33mCPU:\033[0m      %s\n", sr.PC.CPU)
+	fmt.Printf("   \033[1;33mArch:\033[0m     %s\n", sr.PC.Arch)
 	fmt.Printf("   \033[1;33mGraphics:\033[0m %s\n", sr.PC.Graphic)
 	fmt.Printf("   \033[1;33mDisk:\033[0m     %s\n", sr.PC.Disk)
 	fmt.Printf("   \033[1;33mMemory:\033[0m   %s\n", sr.PC.Ram)

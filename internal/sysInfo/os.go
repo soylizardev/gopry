@@ -18,12 +18,30 @@ func (i *InfoOs) GetHost() {
 }
 
 func (i *InfoOs) GetOS() {
+	content, errDis := os.ReadFile("/etc/os-release")
+	var distro string
+	if errDis != nil {
+		distro = "Unknown"
+		return
+	}
+
+	lines := strings.SplitSeq(string(content), "\n")
+	for line := range lines {
+		if strings.HasPrefix(line, "PRETTY_NAME=") {
+			div := strings.Split(line, "=")
+			if len(div) > 1 {
+				distro = strings.Trim(strings.TrimSpace(div[1]), "\"")
+				break
+			}
+		}
+	}
+
 	output, err := os.ReadFile("/proc/sys/kernel/ostype")
 	if err != nil {
 		i.OS = "Unknown"
 		return
 	}
-	i.OS = strings.TrimSpace(string(output))
+	i.OS = fmt.Sprintf("%s (%s)", distro, strings.TrimSpace(string(output)))
 }
 
 func (i *InfoOs) GetKernel() {
