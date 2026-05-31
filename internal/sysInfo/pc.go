@@ -50,10 +50,15 @@ func (i *InfoPc) GetCPU() {
 			div := strings.Split(line, ":")
 			cpuModel = strings.TrimSpace(div[1])
 			cpuThreads++
+		} else {
+			cpuModel = "Unknown"
+			cpuThreads = 0
 		}
 		if strings.Contains(line, "cpu cores") {
 			div := strings.Split(line, ":")
 			cpuCores = strings.TrimSpace(div[1])
+		} else {
+			cpuCores = "0"
 		}
 	}
 	i.CPU = fmt.Sprintf("%s (%s Cores / %d Threads)", cpuModel, cpuCores, cpuThreads)
@@ -63,6 +68,7 @@ func (i *InfoPc) GetArch() {
 	output, err := os.ReadFile("/proc/sys/kernel/arch")
 	if err != nil {
 		i.Arch = "Unknown"
+		return
 	}
 	i.Arch = strings.TrimSpace(string(output))
 }
